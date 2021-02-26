@@ -1,8 +1,18 @@
 var button = document.querySelector("#start-quiz");
 var counter = 75;
 var timer = document.querySelector("#countDown");
+var main = document.querySelector("main");
+var quizArea = document.querySelector("#quiz-cards");
+var h1 = document.querySelector("h1");
+var quizP = document.querySelector("#main");
+var listBox = document.createElement("div");
+var list = document.createElement("ol");
+var answerButtons = document.createElement("button");
+var response = document.createElement("p");
 
-button.addEventListener("click", beginQuiz());
+var listItem;
+
+
 
 var questions = [
     {
@@ -93,19 +103,19 @@ var questions = [
         text: "In HTML the main tags fall in this order from top to bottom: ________, then ________, then _______, and finally __________",
         answers: [
             {
-                text: "<header>, <body>, <html>, <footer>",
+                text: "header, body, html, footer",
                 correct: false
             },
             {
-                text: "<html>, <header>, <body>, <footer>",
+                text: "html, header, body, footer",
                 correct: false
             },
             {
-                text: "<html>, <body>, <header>, <footer>",
+                text: "html, body, header, footer",
                 correct: true
             },
             {
-                text: "<body>, <header>, <html>, <footer>",
+                text: "body, header, html, footer",
                 correct: false
             }
         ]
@@ -114,32 +124,78 @@ var questions = [
         text: "A list that has ordered items is put into the HTML using ________.",
         answers: [
             {
-                text: "<li>",
-                correct: 
+                text: "li",
+                correct: false
             },
             {
-                text: "<ul>",
-                correct: 
+                text: "ul",
+                correct: false
             },
             {
-                text: "<dl>",
-                correct: 
+                text: "dl",
+                correct: false
             },
             {
-                text: "<ol>",
-                correct: 
+                text: "ol",
+                correct: true
             }
         ]
-    },
-]
+    }
+];
 
 function beginQuiz() {
+    generateQuestions();
+    //generateAnswers();
+
+    console.log("hello");
+    
     var myInterval = setInterval(function() {
         counter--;
-        timer.textContent(counter);
+        timer.textContent = counter;
         if (counter === 0) {
             clearInterval(myInterval);
             console.log("Time's up!");
         }
+    }, 1000);
+};
+
+button.addEventListener("click", beginQuiz);
+
+function generateQuestions() {
+    h1.remove();
+    button.remove();
+    var randomQuestion = Math.floor(Math.random() * questions.length);
+    quizP.innerHTML = questions[randomQuestion].text;
+    quizArea.appendChild(listBox);
+    //console.log(listBox);
+    listBox.appendChild(list);
+    //console.log(list);
+    //var randomAnswers = Math.floor(Math.random() * questions[randomQuestion].answers.length);
+    //console.log(randomAnswers);
+    for (let i = 0; i < questions[randomQuestion].answers.length; i++) {
+        listItem = document.createElement("li");
+        listItem.setAttribute("style", "font-size: 1.6rem; text-align: left; margin-left: 15px");
+        listItem.innerHTML += "<button id='answer'>" + questions[randomQuestion].answers[i].text + "</button>";
+        list.appendChild(listItem);
+        //answerButtons.innerHTML = questions[randomQuestion].answers[i].text;
+
+        let answer = document.querySelector("#answer");
+        answer.addEventListener("click", userChoice());
+
+        function userChoice() {
+            if (answer.clicked === "false") {
+                console.log("Wrong");
+                quizArea.appendChild(response);
+                response.innerHTML = "Wrong!";
+            }  else {
+                console.log("Correct");
+                quizArea.appendChild(response);
+                response.innerHTML = "Correct!";
+            }
+        }
     }
+        
 }
+
+
+
