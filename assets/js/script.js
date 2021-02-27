@@ -145,9 +145,7 @@ var questions = [
 
 function beginQuiz() {
     generateQuestions();
-    //generateAnswers();
-
-    console.log("hello");
+    userChoice()
     
     var myInterval = setInterval(function() {
         counter--;
@@ -167,35 +165,29 @@ function generateQuestions() {
     var randomQuestion = Math.floor(Math.random() * questions.length);
     quizP.innerHTML = questions[randomQuestion].text;
     quizArea.appendChild(listBox);
-    //console.log(listBox);
     listBox.appendChild(list);
-    //console.log(list);
-    //var randomAnswers = Math.floor(Math.random() * questions[randomQuestion].answers.length);
-    //console.log(randomAnswers);
+    
     for (let i = 0; i < questions[randomQuestion].answers.length; i++) {
+        
         listItem = document.createElement("li");
         listItem.setAttribute("style", "font-size: 1.6rem; text-align: left; margin-left: 15px");
-        listItem.innerHTML += "<button id='answer'>" + questions[randomQuestion].answers[i].text + "</button>";
-        list.appendChild(listItem);
-        //answerButtons.innerHTML = questions[randomQuestion].answers[i].text;
-
-        let answer = document.querySelector("#answer");
-        answer.addEventListener("click", userChoice());
-
-        function userChoice() {
-            if (answer.clicked === "false") {
-                console.log("Wrong");
-                quizArea.appendChild(response);
-                response.innerHTML = "Wrong!";
-            }  else {
-                console.log("Correct");
-                quizArea.appendChild(response);
-                response.innerHTML = "Correct!";
-            }
-        }
-    }
-        
+        listItem.innerHTML += "<button class='answer' data-correct=" + questions[randomQuestion].answers[i].correct + ">" + questions[randomQuestion].answers[i].text + "</button>";
+    
+        list.appendChild(listItem);   
+    } 
+    
+    
 }
 
-
-
+function userChoice() {
+    var button = document.querySelector(".answer");
+    var dataCorrect = document.querySelectorAll("button[data-correct]");
+    button.addEventListener("click", function() {
+        if (dataCorrect === "true") {
+            console.log(true);
+        } else {
+            console.log(false);
+            counter -= 10;
+        }
+    });
+};
