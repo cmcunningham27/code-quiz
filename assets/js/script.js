@@ -145,12 +145,12 @@ var questions = [
 
 function beginQuiz() {
     generateQuestions();
-    userChoice()
+    //userChoice()
     
     var myInterval = setInterval(function() {
         counter--;
         timer.textContent = counter;
-        if (counter === 0) {
+        if (counter <= 0) {
             clearInterval(myInterval);
             console.log("Time's up!");
         }
@@ -171,23 +171,24 @@ function generateQuestions() {
         
         listItem = document.createElement("li");
         listItem.setAttribute("style", "font-size: 1.6rem; text-align: left; margin-left: 15px");
-        listItem.innerHTML += "<button class='answer' data-correct=" + questions[randomQuestion].answers[i].correct + ">" + questions[randomQuestion].answers[i].text + "</button>";
-    
+        listItem.innerHTML += "<button onclick='checkCorrect()' class=" + questions[randomQuestion].answers[i].correct + " id=" + i + ">" + questions[randomQuestion].answers[i].text + "</button>";
+        console.log(questions[randomQuestion].answers[i].correct);
         list.appendChild(listItem);   
     } 
     
     
 }
-
-function userChoice() {
-    var button = document.querySelector(".answer");
-    var dataCorrect = document.querySelectorAll("button[data-correct]");
-    button.addEventListener("click", function() {
-        if (dataCorrect === "true") {
-            console.log(true);
-        } else {
+    
+function checkCorrect() {
+    var dataCorrect = document.querySelector(".false");
+    var data = document.querySelector(".true");
+    console.log(data);
+    console.log(dataCorrect);
+    if (dataCorrect) {
             console.log(false);
             counter -= 10;
+        } else {
+            console.log(true);
+
         }
-    });
-};
+}
