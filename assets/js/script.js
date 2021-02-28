@@ -9,9 +9,13 @@ var listBox = document.createElement("div");
 var list = document.createElement("ol");
 var answerButtons = document.createElement("button");
 var response = document.createElement("p");
-
+var answerText;
+var correct;
 var listItem;
-
+var randomQuestion;
+var dataCheck;
+var input;
+var submit;
 
 
 var questions = [
@@ -20,19 +24,19 @@ var questions = [
         answers: [
             {
                 text: "Math.random()",
-                correct: false
+                correct: "no"
             },
             {
                 text: "addEventListener()",
-                correct: true
+                correct: "yes"
             },
             {
                 text: "multiply()",
-                correct: false
+                correct: "no"
             },
             {
                 text: "preventDefault()",
-                correct: false
+                correct: "no"
             }
         ]
     },
@@ -41,19 +45,19 @@ var questions = [
         answers: [
             {
                 text: "display",
-                correct: false
+                correct: "no"
             },
             {
                 text: "flex-flow",
-                correct: false
+                correct: "no"
             },
             {
                 text: "justify-content",
-                correct: false
+                correct: "no"
             },
             {
                 text: "flex-direction",
-                correct: true
+                correct: "yes"
             }
         ]
     },
@@ -62,19 +66,19 @@ var questions = [
         answers: [
             {
                 text: "window",
-                correct: true
+                correct: "yes"
             },
             {
                 text: "screen",
-                correct: false
+                correct: "no"
             },
             {
                 text: "document",
-                correct: false
+                correct: "no"
             },
             {
                 text: "HTML",
-                correct: false
+                correct: "no"
             }
         ]
     },
@@ -83,19 +87,19 @@ var questions = [
         answers: [
             {
                 text: "border",
-                correct: false
+                correct: "no"
             },
             {
                 text: "border-radius",
-                correct: true
+                correct: "yes"
             },
             {
                 text: "curved-corners",
-                correct: false
+                correct: "no"
             },
             {
                 text: "flex-wrap",
-                correct: false
+                correct: "no"
             }
         ]
     },
@@ -104,19 +108,19 @@ var questions = [
         answers: [
             {
                 text: "header, body, html, footer",
-                correct: false
+                correct: "no"
             },
             {
                 text: "html, header, body, footer",
-                correct: false
+                correct: "no"
             },
             {
                 text: "html, body, header, footer",
-                correct: true
+                correct: "yes"
             },
             {
                 text: "body, header, html, footer",
-                correct: false
+                correct: "no"
             }
         ]
     },
@@ -125,26 +129,26 @@ var questions = [
         answers: [
             {
                 text: "li",
-                correct: false
+                correct: "no"
             },
             {
                 text: "ul",
-                correct: false
+                correct: "no"
             },
             {
                 text: "dl",
-                correct: false
+                correct: "no"
             },
             {
                 text: "ol",
-                correct: true
+                correct: "yes"
             }
         ]
     }
 ];
 
 function beginQuiz() {
-    generateQuestions();
+    
     //userChoice()
     
     var myInterval = setInterval(function() {
@@ -153,8 +157,10 @@ function beginQuiz() {
         if (counter <= 0) {
             clearInterval(myInterval);
             console.log("Time's up!");
+            testOver();
         }
     }, 1000);
+    generateQuestions();
 };
 
 button.addEventListener("click", beginQuiz);
@@ -162,33 +168,49 @@ button.addEventListener("click", beginQuiz);
 function generateQuestions() {
     h1.remove();
     button.remove();
-    var randomQuestion = Math.floor(Math.random() * questions.length);
+    randomQuestion = Math.floor(Math.random() * questions.length);
     quizP.innerHTML = questions[randomQuestion].text;
     quizArea.appendChild(listBox);
     listBox.appendChild(list);
-    
-    for (let i = 0; i < questions[randomQuestion].answers.length; i++) {
-        
-        listItem = document.createElement("li");
-        listItem.setAttribute("style", "font-size: 1.6rem; text-align: left; margin-left: 15px");
-        listItem.innerHTML += "<button onclick='checkCorrect()' class=" + questions[randomQuestion].answers[i].correct + " id=" + i + ">" + questions[randomQuestion].answers[i].text + "</button>";
-        console.log(questions[randomQuestion].answers[i].correct);
-        list.appendChild(listItem);   
-    } 
-    
-    
+    generateAnswers();
 }
-    
-function checkCorrect() {
-    var dataCorrect = document.querySelector(".false");
-    var data = document.querySelector(".true");
-    console.log(data);
-    console.log(dataCorrect);
-    if (dataCorrect) {
-            console.log(false);
-            counter -= 10;
-        } else {
-            console.log(true);
+function checkAnswer(value) {
 
-        }
+    if (value === "no") {
+        counter -= 10;
+        alert("Wrong!");
+    } else {
+        listBox.remove();
+        generateQuestions();
+    }
+    console.log(value);
 }
+function generateAnswers() {   
+    for (let i = 0; i < questions[randomQuestion].answers.length; i++) {
+        answerText = questions[randomQuestion].answers[i].text;
+        correct = questions[randomQuestion].answers[i].correct;
+        listItem= document.createElement("li");
+        listItem.setAttribute("style", "font-size: 1.6rem; text-align: left; margin-left: 15px");
+        listItem.innerHTML += "<button value=" + correct + " class=" + correct + " onclick='checkAnswer(this.value)' id= " + i + "> " + answerText + "</button>";
+        list.appendChild(listItem); 
+    } 
+}     
+
+
+    /*if (check) {
+        generateQuestions();
+    } else {
+        counter -= 10;
+    }*/
+    
+
+ function testOver() {
+    quizP.innerHTML = "All done! <br> Your final score is:"
+    listBox.remove();
+    input = document.createElement("input");
+    submit = document.createElement("button");
+    input.innerHTML = counter;
+
+    
+
+} 
