@@ -1,4 +1,5 @@
 var button = document.querySelector("#start-quiz");
+var view = document.querySelector("#view");
 var counter = 75;
 var timer = document.querySelector("#countDown");
 var main = document.querySelector("main");
@@ -13,9 +14,15 @@ var answerText;
 var correct;
 var listItem;
 var randomQuestion;
-var dataCheck;
-var input;
-var submit;
+var alert = document.createElement("p");
+var initials = document.createElement("p");
+var input = document.createElement("input");
+var submit = document.createElement("button");
+var highScores = document.createElement("ol");
+var scores = document.createElement("li");
+var goBack = document.createElement("button");
+var clear = document.createElement("button");
+var listOfScores = localStorage.getItem("scores");
 
 
 var questions = [
@@ -166,25 +173,38 @@ function beginQuiz() {
 button.addEventListener("click", beginQuiz);
 
 function generateQuestions() {
+    if (questions.length === 0) {
+        clearInterval(myInterval);
+        console.log("Time's up!");
+        testOver();
+    } else {
     h1.remove();
     button.remove();
     randomQuestion = Math.floor(Math.random() * questions.length);
     quizP.innerHTML = questions[randomQuestion].text;
     quizArea.appendChild(listBox);
     listBox.appendChild(list);
+    quizArea.appendChild(alert);
     generateAnswers();
+    }
 }
+
+
 function checkAnswer(value) {
 
     if (value === "no") {
         counter -= 10;
-        alert("Wrong!");
+        alert.innerHTML = "Wrong!";
+        
     } else {
-        listBox.remove();
+        alert.innerHTML = "";
+        list.innerHTML = "";
+        questions.splice(randomQuestion, 1);
         generateQuestions();
     }
-    console.log(value);
 }
+
+
 function generateAnswers() {   
     for (let i = 0; i < questions[randomQuestion].answers.length; i++) {
         answerText = questions[randomQuestion].answers[i].text;
@@ -192,25 +212,69 @@ function generateAnswers() {
         listItem= document.createElement("li");
         listItem.setAttribute("style", "font-size: 1.6rem; text-align: left; margin-left: 15px");
         listItem.innerHTML += "<button value=" + correct + " class=" + correct + " onclick='checkAnswer(this.value)' id= " + i + "> " + answerText + "</button>";
-        list.appendChild(listItem); 
+        list.appendChild(listItem);
     } 
 }     
 
 
-    /*if (check) {
-        generateQuestions();
-    } else {
-        counter -= 10;
-    }*/
-    
-
  function testOver() {
-    quizP.innerHTML = "All done! <br> Your final score is:"
+    quizP.innerHTML = "All done! <br> Your final score is: " + counter;
     listBox.remove();
-    input = document.createElement("input");
-    submit = document.createElement("button");
-    input.innerHTML = counter;
-
-    
-
+    alert.innerHTML = "";
+    quizArea.appendChild(initials);
+    quizArea.appendChild(input);
+    quizArea.appendChild(submit);
+    input.setAttribute("id", "input");
+    submit.setAttribute("onclick", "logScore()");
+    submit.textContent = "Submit";
+    initials.innerHTML = "Enter initials: ";
 } 
+
+function logScore() {
+    initials.remove();
+    input.remove();
+    submit.remove();
+    var score = input.value + "--" + counter;
+    localStorage.setItem("score", score);
+    quizP.innerHTML = "Highschores:";
+    quizArea.appendChild(highScores);
+    highScores.appendChild(scores);
+    scores.setAttribute("style", "font-size: 1.6rem; text-align: left; margin-left: 15px");
+    scores.innerHTML = localStorage.getItem("score");
+    quizArea.appendChild(goBack);
+    goBack.setAttribute("onclick", "back()");
+    goBack.textContent = "Go Back";
+    quizArea.appendChild(clear);
+    clear.setAttribute("onclick", "clearHighscore()")
+    clear.textContent = "Clear Highscores";
+}
+
+function clearHighscore() {
+    scores.remove();
+}
+function back() {
+    highScores.remove();
+    scores.remove();
+    goBack.remove();
+    clear.remove();
+    scores.remove();
+    testOver();
+}
+function highscores() {
+    h1.remove();
+    button.remove();
+    listBox.remove();
+    initials.remove();
+    input.remove();
+    submit.remove();
+    highScores.remove();
+    scores.remove();
+    goBack.remove();
+    clear.remove();
+    scores.remove();
+    
+    console.log(listOfScores);
+    quizP.innerHTML = "Highscores:";
+    quizArea.appendChild(list)
+
+}
