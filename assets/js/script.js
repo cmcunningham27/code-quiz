@@ -244,7 +244,7 @@ function logScore() {
     highScores.appendChild(scores);
     scores.setAttribute("style", "font-size: 1.6rem; text-align: left; margin-left: 15px; margin-bottom: 25px;");
  //stores current user score if there is no score in the local storage yet
- if (!localStorage.getItem("score")) {
+ if (oldScore = "") {
      localStorage.setItem("score", score);
  }   
  //stores the current user score if it is greater than their previous highest score in their local storage 
