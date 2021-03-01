@@ -12,22 +12,25 @@ html {
     font-size: 10px;
 }
 
+/*Gives a font style to the whole body*/
 body {
     font-family: Constantia, "Lucida Bright", Licidabright, "Lucida Serif", Lucida, "DejaVu Serif", "Bitstream Vera Serif", "Liberation Serif", Georgia, serif;
 }
 
 
-
+/*Gives any paragraph tag a different font-size then the parent font*/
 p {
     font-size: 1.6rem;
 }
 
+/*styles the View Highscores in the header*/
 #view {
     position: relative;
     width: 40%;
     margin-inline-start: 15px;
 }
 
+/*Styles the Timer in the header*/
 #time-left {
     position: absolute;
     top: 0;
@@ -37,15 +40,12 @@ p {
     margin-inline-end: 15px;
 }
 
+/*styles the div that holds all the quiz content and centers the text*/
 #quiz-cards {
     margin: 10% 20%;
     height: 300px;
     width: 60%;
     text-align: center;
-}
-
-#quiz-cards1 {
-    display: none;
 }
 
 #quiz-cards p {
@@ -64,6 +64,7 @@ button {
     font-size: 1.6rem;
 }
 
+/*Gives the input box a margin to separate it some from the Submit button when it is appended to the quiz div*/
 input {
     margin-right: 15px;
 }
