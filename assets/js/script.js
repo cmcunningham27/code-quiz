@@ -243,8 +243,12 @@ function logScore() {
     quizArea.appendChild(highScores);
     highScores.appendChild(scores);
     scores.setAttribute("style", "font-size: 1.6rem; text-align: left; margin-left: 15px; margin-bottom: 25px;");
- //stores the current user score if it is greater than their previous highest score in their local storage   
-    if (localStorage.getItem("score") < score){
+ //stores current user score if there is no score in the local storage yet
+ if (!localStorage.getItem("score")) {
+     localStorage.setItem("score", score);
+ }   
+ //stores the current user score if it is greater than their previous highest score in their local storage 
+ if (localStorage.getItem("score") < score){
         localStorage.setItem("score", score);
     }
     scores.innerHTML = score;
