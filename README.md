@@ -12,7 +12,7 @@ I was able to achieve this by creating an Array of 6 questions and an Array in e
 
 &nbsp;
 
-There is a timer, and if it runs out of time the quiz will be over. If the user answers all questions before the time has run out, the quiz will be over and their score will be presented to them. They then are presented with an input to type their initials and Submit it. Once sumitted they will see their initials and current score. I used the local storage to store their score if it is higher than any previous scores they may have had. 
+There is a timer, and if it runs out of time the quiz will be over. If the user answers all questions before the time has run out, the quiz will be over and their score will be presented to them. They then are presented with an input to type their initials and Submit it. Once sumitted they will see their initials and current score. I used the local storage to store their score if it is their first time taking the test, and if their current score is higher than any previous scores they may have had. 
 
 &nbsp;
 
@@ -47,7 +47,7 @@ When you open the website, click the "Start Quiz" button. You will see your time
 
 &nbsp;
 
-You will then be told that you are "All done!", and what your score is. You are prompted to enter your initials and submit them. Upon submitting you will see your current score. If you try the test more times, your highest old score and your current score will be shown. You can then choose to clear the scores and/or return to the beginning where you will see the "Start Quiz" button again. You can do the quiz as many times as you'd like.
+You will then be told that you are "All done!", and what your score is. You are prompted to enter your initials and submit them. Upon submitting you will see your current score. Your first score will be stored in your local storage for later use. If you try the test more times, your highest old score and your current score will be shown. You can then choose to clear the scores and/or return to the beginning where you will see the "Start Quiz" button again. You can do the quiz as many times as you'd like.
 
 ---
 &nbsp;
