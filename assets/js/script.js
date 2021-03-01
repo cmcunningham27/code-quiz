@@ -237,18 +237,19 @@ function logScore() {
     submit.remove();
     var score = input.value + "--" + counter;
     oldScore.setAttribute("style", "font-size: 1.6rem; text-align: left; margin-left: 15px; margin-bottom: 15px;");
-    oldScore.innerHTML = localStorage.getItem("score");
+ //stores current user score if there is no score in the local storage yet
+    if (localStorage.getItem("score")) {
+        oldScore.innerHTML = localStorage.getItem("score");
+    }  else {
+        localStorage.setItem("score", score);
+    }     
     highScores.appendChild(oldScore);
     quizP.innerHTML = "Highschores:";
     quizArea.appendChild(highScores);
     highScores.appendChild(scores);
     scores.setAttribute("style", "font-size: 1.6rem; text-align: left; margin-left: 15px; margin-bottom: 25px;");
- //stores current user score if there is no score in the local storage yet
- if (oldScore = "") {
-     localStorage.setItem("score", score);
- }   
  //stores the current user score if it is greater than their previous highest score in their local storage 
- if (localStorage.getItem("score") < score){
+    if (localStorage.getItem("score") < score){
         localStorage.setItem("score", score);
     }
     scores.innerHTML = score;
