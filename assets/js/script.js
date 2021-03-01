@@ -1,30 +1,30 @@
-var button = document.querySelector("#start-quiz");
-var view = document.querySelector("#view");
+//Declared variables to be used for later
+var go = document.querySelector("#start-quiz");
 var counter = 75;
 var timer = document.querySelector("#countDown");
-var main = document.querySelector("main");
+var myInterval;
 var quizArea = document.querySelector("#quiz-cards");
 var h1 = document.querySelector("h1");
 var quizP = document.querySelector("#main");
 var listBox = document.createElement("div");
 var list = document.createElement("ol");
 var answerButtons = document.createElement("button");
-var response = document.createElement("p");
-var answerText;
-var correct;
-var listItem;
-var randomQuestion;
+var intro = document.createElement("p");
 var alert = document.createElement("p");
 var initials = document.createElement("p");
 var input = document.createElement("input");
 var submit = document.createElement("button");
 var highScores = document.createElement("ol");
+var oldScore = document.createElement("li");
 var scores = document.createElement("li");
 var goBack = document.createElement("button");
 var clear = document.createElement("button");
-var listOfScores = localStorage.getItem("scores");
+var answerText;
+var correct;
+var listItem;
+var randomQuestion;
 
-
+//Creates Array for random questions to be generated
 var questions = [
     {
         text: "_________________ is a function that will be called whenever the specified event is delivered to the target.",
@@ -55,15 +55,15 @@ var questions = [
                 correct: "no"
             },
             {
-                text: "flex-flow",
+                text: "flexFlow",
                 correct: "no"
             },
             {
-                text: "justify-content",
+                text: "justifyContent",
                 correct: "no"
             },
             {
-                text: "flex-direction",
+                text: "flexDirection",
                 correct: "yes"
             }
         ]
@@ -90,22 +90,22 @@ var questions = [
         ]
     },
     {
-        text: "If i want to create rounded corners on an image I would need to use _________.",
+        text: "If I want to create rounded corners on an image in Javascript I would need to use _________.",
         answers: [
             {
-                text: "border",
+                text: "style.border",
                 correct: "no"
             },
             {
-                text: "border-radius",
+                text: "style.borderRadius",
                 correct: "yes"
             },
             {
-                text: "curved-corners",
+                text: "style.curvedCorners",
                 correct: "no"
             },
             {
-                text: "flex-wrap",
+                text: "style.flexWrap",
                 correct: "no"
             }
         ]
@@ -132,33 +132,31 @@ var questions = [
         ]
     },
     {
-        text: "A list that has ordered items is put into the HTML using ________.",
+        text: "A list that has ordered items is declared in Javascript using ________.",
         answers: [
             {
-                text: "li",
+                text: "document.querySelector('li')",
                 correct: "no"
             },
             {
-                text: "ul",
+                text: "document.querySelector('ul')",
                 correct: "no"
             },
             {
-                text: "dl",
+                text: "document.querySelector('dl')",
                 correct: "no"
             },
             {
-                text: "ol",
+                text: "document.querySelector('ol')",
                 correct: "yes"
             }
         ]
     }
 ];
 
+//Starts the timer and calls the function to generate questions
 function beginQuiz() {
-    
-    //userChoice()
-    
-    var myInterval = setInterval(function() {
+    myInterval = setInterval(function() {
         counter--;
         timer.textContent = counter;
         if (counter <= 0) {
@@ -170,16 +168,18 @@ function beginQuiz() {
     generateQuestions();
 };
 
-button.addEventListener("click", beginQuiz);
 
 function generateQuestions() {
+//Checks length of Array to determine whether to call testOver function    
     if (questions.length === 0) {
         clearInterval(myInterval);
         console.log("Time's up!");
+        timer = "";
         testOver();
     } else {
+ //Removes beginning HTML to make room for new HTML elements, generates next question, and calls generateAnswer function   
     h1.remove();
-    button.remove();
+    go.remove();
     randomQuestion = Math.floor(Math.random() * questions.length);
     quizP.innerHTML = questions[randomQuestion].text;
     quizArea.appendChild(listBox);
@@ -189,7 +189,7 @@ function generateQuestions() {
     }
 }
 
-
+//Triggered by clicked answer button to create an argument to determine whether users answer was correct or not, if it is then the question is removed from the questions array and generateQuestions is called again
 function checkAnswer(value) {
 
     if (value === "no") {
@@ -197,14 +197,14 @@ function checkAnswer(value) {
         alert.innerHTML = "Wrong!";
         
     } else {
-        alert.innerHTML = "";
+        alert.innerHTML = "Correct!";
         list.innerHTML = "";
         questions.splice(randomQuestion, 1);
         generateQuestions();
     }
 }
 
-
+//creates list of answers to question that was chosen
 function generateAnswers() {   
     for (let i = 0; i < questions[randomQuestion].answers.length; i++) {
         answerText = questions[randomQuestion].answers[i].text;
@@ -216,9 +216,10 @@ function generateAnswers() {
     } 
 }     
 
-
+//Ends quiz, removes previous HTML elements and appends new elements 
  function testOver() {
     quizP.innerHTML = "All done! <br> Your final score is: " + counter;
+    //timer.remove();
     listBox.remove();
     alert.innerHTML = "";
     quizArea.appendChild(initials);
@@ -230,51 +231,44 @@ function generateAnswers() {
     initials.innerHTML = "Enter initials: ";
 } 
 
+//Removes previous elements, appends new elements to let user know their score, and stores their score in their local storage
 function logScore() {
     initials.remove();
     input.remove();
     submit.remove();
     var score = input.value + "--" + counter;
-    localStorage.setItem("score", score);
+    oldScore.setAttribute("style", "font-size: 1.6rem; text-align: left; margin-left: 15px");
+    oldScore.innerHTML = localStorage.getItem("score");
+    highScores.appendChild(oldScore);
     quizP.innerHTML = "Highschores:";
     quizArea.appendChild(highScores);
     highScores.appendChild(scores);
     scores.setAttribute("style", "font-size: 1.6rem; text-align: left; margin-left: 15px");
-    scores.innerHTML = localStorage.getItem("score");
+ //stores the current user score if it is greater than their previous highest score in their local storage   
+    if (localStorage.getItem("score") < score){
+        localStorage.setItem("score", score);
+    }
+    scores.innerHTML = score;
     quizArea.appendChild(goBack);
-    goBack.setAttribute("onclick", "back()");
+    goBack.setAttribute("onclick", "window.location.href=window.location.href");
     goBack.textContent = "Go Back";
     quizArea.appendChild(clear);
     clear.setAttribute("onclick", "clearHighscore()")
     clear.textContent = "Clear Highscores";
 }
 
+//Removes listed scores above button
 function clearHighscore() {
+    oldScore.remove();
     scores.remove();
 }
-function back() {
-    highScores.remove();
-    scores.remove();
-    goBack.remove();
-    clear.remove();
-    scores.remove();
-    testOver();
-}
-function highscores() {
-    h1.remove();
-    button.remove();
-    listBox.remove();
-    initials.remove();
-    input.remove();
-    submit.remove();
-    highScores.remove();
-    scores.remove();
-    goBack.remove();
-    clear.remove();
-    scores.remove();
-    
-    console.log(listOfScores);
-    quizP.innerHTML = "Highscores:";
-    quizArea.appendChild(list)
 
-}
+// //
+// function back() {
+//    console.log("bacon");
+//    quizP.remove();
+//    highScores.remove();
+//    scores.remove();
+//    goBack.remove(); 
+//    clear.remove();
+// }
