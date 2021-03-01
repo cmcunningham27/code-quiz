@@ -219,9 +219,8 @@ function generateAnswers() {
 //Ends quiz, removes previous HTML elements and appends new elements 
  function testOver() {
     quizP.innerHTML = "All done! <br> Your final score is: " + counter;
-    //timer.remove();
     listBox.remove();
-    alert.innerHTML = "";
+    alert.remove();
     quizArea.appendChild(initials);
     quizArea.appendChild(input);
     quizArea.appendChild(submit);
@@ -237,19 +236,21 @@ function logScore() {
     input.remove();
     submit.remove();
     var score = input.value + "--" + counter;
-    oldScore.setAttribute("style", "font-size: 1.6rem; text-align: left; margin-left: 15px");
+    oldScore.setAttribute("style", "font-size: 1.6rem; text-align: left; margin-left: 15px; margin-bottom: 15px;");
     oldScore.innerHTML = localStorage.getItem("score");
     highScores.appendChild(oldScore);
     quizP.innerHTML = "Highschores:";
     quizArea.appendChild(highScores);
     highScores.appendChild(scores);
-    scores.setAttribute("style", "font-size: 1.6rem; text-align: left; margin-left: 15px");
+    scores.setAttribute("style", "font-size: 1.6rem; text-align: left; margin-left: 15px; margin-bottom: 25px;");
  //stores the current user score if it is greater than their previous highest score in their local storage   
     if (localStorage.getItem("score") < score){
         localStorage.setItem("score", score);
     }
     scores.innerHTML = score;
     quizArea.appendChild(goBack);
+//Adds attribute so if the user clicks it, the website it completely refreshed
+    goBack.setAttribute("style", "margin-right: 15px"); 
     goBack.setAttribute("onclick", "window.location.href=window.location.href");
     goBack.textContent = "Go Back";
     quizArea.appendChild(clear);
@@ -263,12 +264,3 @@ function clearHighscore() {
     scores.remove();
 }
 
-// //
-// function back() {
-//    console.log("bacon");
-//    quizP.remove();
-//    highScores.remove();
-//    scores.remove();
-//    goBack.remove(); 
-//    clear.remove();
-// }

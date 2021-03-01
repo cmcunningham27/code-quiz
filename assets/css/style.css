@@ -4,8 +4,8 @@
     box-sizing: border-box;
 }
 
-html,
-body {
+/*styles the html*/
+html {
     height: 100%;
     margin: 0;
     padding: 0;
@@ -62,4 +62,8 @@ button {
     padding: 8px 20px;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
     font-size: 1.6rem;
+}
+
+input {
+    margin-right: 15px;
 }
