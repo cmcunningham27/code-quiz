@@ -31,7 +31,7 @@ It took me a while to figure out how to stop the timer when they got all the ans
 
 &nbsp;
 
-## The following image shows how the webpage appears on a desktop after a password has been generated
+## The following image shows how the webpage appears on a desktop
 
 &nbsp;
 
