@@ -35,7 +35,10 @@ It took me a while to figure out how to stop the timer when they got all the ans
 
 &nbsp;
 
-![website screenshot](./assets/images/website.png)
+![opening screenshot](./assets/images/website.png)
+![starting quiz screenshot](./assets/images/website-1.png)
+![finished quiz screenshot](./assets/images/website-2.png)
+![scores screenshot](./assets/images/website-3.png)
 
 ---
 
