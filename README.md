@@ -4,7 +4,7 @@
 
 &nbsp;
 
-I created this website for boot camp students whom want to take a timed quiz on Javascript fundamentals, and store their high scores.  
+I created this website for boot camp students whom want to take a timed quiz on Javascript fundamentals, and store their high scores. In creating the quiz I utilized HTML/CSS and Javascript technologies.
 
 &nbsp;
 I was able to achieve this by creating an Array of 6 questions and an Array in each question for their 4 mutliple choice answers. I later called upon them when the Start Quiz button is clicked by applying Math.random. Once the question is chosen then the answers are chosen with Math.random to create a list under the question. Each answer has been turned into a button. When the user clicks an answer they believe is the correct answer, they are immediately told whether it is correct or not because of an arguement. If their choice is correct, the question will be removed from the questions Array to ensure it does not repeat.
